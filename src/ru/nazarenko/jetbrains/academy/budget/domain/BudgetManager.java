@@ -5,10 +5,10 @@ import ru.nazarenko.jetbrains.academy.budget.services.input.services.FileInputSe
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputService;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServiceException;
 import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.FileOutputService;
+import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.OutputService;
 import ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortServiceContext;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.addPurchaseByCategory;
-import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.getAllPurchases;
 import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
 import static ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortServiceContext.sortMenu;
 
@@ -25,6 +24,7 @@ public class BudgetManager {
     public static final String PURCHASE_LIST_IS_EMPTY = "Purchase list is empty!";
     private static final String FORMAT = "$%.2f";
     private final String pathToLoadingPurchases;
+    private final String pathToOutputPurchases;
     private final static Map<Integer, String> menuItems = new HashMap<>();
 
     static {
@@ -39,7 +39,8 @@ public class BudgetManager {
     }
 
     public BudgetManager(AppConfiguration configuration) {
-        pathToLoadingPurchases = configuration.getPathToPurchaseLoadingFile();
+        this.pathToLoadingPurchases = configuration.getPathToPurchaseLoadingFile();
+        this.pathToOutputPurchases = configuration.getPathToPurchaseOutputFile();
     }
 
     public void startBudgetManagerApplication() throws ApplicationException, IOException {
@@ -119,9 +120,8 @@ public class BudgetManager {
                     break;
 
                 case 5:
-                    FileOutputService fileOutputService = new FileOutputService(pathToLoadingPurchases); // TODO: 25/01/2021 интерфейс!
-                    fileOutputService.createFileInFileSystemByPath(getAllPurchases());
-                    fileOutputService.insertBalanceInFile(balanceManager.getBalance(), new File(pathToLoadingPurchases));
+                    OutputService outputService = new FileOutputService(pathToOutputPurchases, purchaseManager);
+                    outputService.outputPurchases();
 
                     System.out.println();
                     System.out.println("Purchases were saved!");
@@ -147,7 +147,7 @@ public class BudgetManager {
                             break;
                         } else {
                             sortServiceContext.defineMenuItem(choice);
-                            sortServiceContext.setPurchasesForAlgo(PurchaseManager.getAllPurchases());
+                            sortServiceContext.setPurchasesForAlgo(purchaseManager.getAllPurchases());
                             sortServiceContext.invokeSort();
                             sortServiceContext.printSortedPurchaseList();
                         }

@@ -125,7 +125,7 @@ public class PurchaseManager {
         allPurchases.add(purchase);
     }
 
-    public static ArrayList<Purchase> getAllPurchases() {
+    public ArrayList<Purchase> getAllPurchases() {
         return allPurchases;
     }
 

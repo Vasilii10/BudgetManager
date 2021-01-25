@@ -10,9 +10,11 @@ public class BudgetManagerBootstrap {
     public static void main(String[] args) {
 
         String pathToLoadPurchaseFile = "supply/purchases.txt";
+        String pathToPurchaseOutputFile = "supply/purchasesOutput.txt";
+
         System.setProperty(System.lineSeparator(), ">");
 
-        AppConfiguration configuration = new AppConfiguration(pathToLoadPurchaseFile);
+        AppConfiguration configuration = new AppConfiguration(pathToLoadPurchaseFile, pathToPurchaseOutputFile);
         BudgetManager budgetManager = new BudgetManager(configuration);
 
         try {
