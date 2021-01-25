@@ -12,14 +12,14 @@ import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CUR
 
 public class FileOutputService {
 
-    private final String fullPathToFile;
+    private final String fullPathToLoadingFile;
 
-    public FileOutputService(String fullPathToFile) {
-        this.fullPathToFile = fullPathToFile;
+    public FileOutputService(String fullPathToLoadingFile) {
+        this.fullPathToLoadingFile = fullPathToLoadingFile;
     }
 
     public void createFileInFileSystemByPath(ArrayList<Purchase> purchaseArrayList) {
-        File file = new File(fullPathToFile);
+        File file = new File(fullPathToLoadingFile);
         writePurchasesInFile(purchaseArrayList, file);
     }
 

@@ -1,5 +1,6 @@
 package ru.nazarenko.jetbrains.academy.budget.domain;
 
+import ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.FileInputService;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputService;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServiceException;
@@ -23,7 +24,7 @@ public class BudgetManager {
 
     public static final String PURCHASE_LIST_IS_EMPTY = "Purchase list is empty!";
     private static final String FORMAT = "$%.2f";
-    private final String PATH_TO_LOADING_PURCHASES;
+    private final String pathToLoadingPurchases;
     private final static Map<Integer, String> menuItems = new HashMap<>();
 
     static {
@@ -37,13 +38,14 @@ public class BudgetManager {
         menuItems.put(0, " Exit ");
     }
 
-    public BudgetManager(String path_to_loading_purchases) {
-        PATH_TO_LOADING_PURCHASES = path_to_loading_purchases;
+    public BudgetManager(AppConfiguration configuration) {
+        pathToLoadingPurchases = configuration.getPathToPurchaseLoadingFile();
     }
 
-    public void startBudgetManagerApplication(BalanceManager balanceManager) throws ApplicationException, IOException {
+    public void startBudgetManagerApplication() throws ApplicationException, IOException {
         showConsoleMenu();
 
+        BalanceManager balanceManager = new BalanceManager();
         CategoryManager categoryManager = new CategoryManager();
         PurchaseManager purchaseManager = new PurchaseManager(categoryManager);
         defineAppAction(balanceManager, categoryManager, purchaseManager);
@@ -117,9 +119,9 @@ public class BudgetManager {
                     break;
 
                 case 5:
-                    FileOutputService fileOutputService = new FileOutputService(PATH_TO_LOADING_PURCHASES); // TODO: 25/01/2021 интерфейс!
+                    FileOutputService fileOutputService = new FileOutputService(pathToLoadingPurchases); // TODO: 25/01/2021 интерфейс!
                     fileOutputService.createFileInFileSystemByPath(getAllPurchases());
-                    fileOutputService.insertBalanceInFile(balanceManager.getBalance(), new File(PATH_TO_LOADING_PURCHASES));
+                    fileOutputService.insertBalanceInFile(balanceManager.getBalance(), new File(pathToLoadingPurchases));
 
                     System.out.println();
                     System.out.println("Purchases were saved!");
@@ -127,7 +129,7 @@ public class BudgetManager {
                     break;
 
                 case 6:
-                    InputService service = new FileInputService(PATH_TO_LOADING_PURCHASES, purchaseManager, categoryManager);
+                    InputService service = new FileInputService(pathToLoadingPurchases, purchaseManager, categoryManager);
                     service.loadPurchases();
 
                     System.out.println();
