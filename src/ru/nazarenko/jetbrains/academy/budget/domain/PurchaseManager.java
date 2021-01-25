@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.BudgetManager.PURCHASE_LIST_IS_EMPTY;
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+
 
 public class PurchaseManager {
    protected static ArrayList<Purchase> allPurchases = new ArrayList<>();
 
-    public ArrayList<Purchase> foodCategoryList;
-    public ArrayList<Purchase> ClothesCategoryList;
-    public ArrayList<Purchase> EntertainmentCategoryList;
-    public ArrayList<Purchase> OtherCategoryList;
+    private final ArrayList<Purchase> foodCategoryList;
+    private final ArrayList<Purchase> ClothesCategoryList;
+    private final ArrayList<Purchase> EntertainmentCategoryList;
+    private final ArrayList<Purchase> OtherCategoryList;
 
     public PurchaseManager(CategoryManager categoryManager) {
         foodCategoryList = categoryManager.getFoodCategoryList();
@@ -107,7 +108,7 @@ public class PurchaseManager {
     }
 
     // TODO: 10/01/2021 придумать как подавать список категорий
-    public static void addPurchaseByCategory(Purchase purchase, PurchaseManager purchaseManager, CategoryManager categoryManager) {
+    public void addPurchaseByCategory(Purchase purchase, PurchaseManager purchaseManager, CategoryManager categoryManager) {
         if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(0).getCategoryName())) { // лучше наверное здесь сравнивать объекты класса Categoty
             purchaseManager.getFoodCategoryList().add(purchase);
         } else if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(1).getCategoryName())) {
@@ -121,14 +122,13 @@ public class PurchaseManager {
 
     }
 
-    public static void addPurchaseWithoutChangingBalance(Purchase purchase) {
+    public void addPurchaseWithoutChangingBalance(Purchase purchase) {
         allPurchases.add(purchase);
     }
 
     public ArrayList<Purchase> getAllPurchases() {
         return allPurchases;
     }
-
 
     public ArrayList<Purchase> getFoodCategoryList() {
         return foodCategoryList;

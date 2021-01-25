@@ -6,8 +6,7 @@ import ru.nazarenko.jetbrains.academy.budget.domain.Purchase;
 import java.util.ArrayList;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
-
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
 public class ByTypeSorting implements SortingService {
     @Override
@@ -19,15 +18,12 @@ public class ByTypeSorting implements SortingService {
 
     @Override
     public void print(ArrayList<Purchase> purchases) {
-
         ArrayList<Purchase> foodCategoryList = new ArrayList<>();
         ArrayList<Purchase> ClothesCategoryList = new ArrayList<>();
         ArrayList<Purchase> EntertainmentCategoryList = new ArrayList<>();
         ArrayList<Purchase> OtherCategoryList = new ArrayList<>();
 
-
-        for (Purchase purchase : purchases
-        ) {
+        for (Purchase purchase : purchases) {
             {
                 if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(0).getCategoryName())) { // лучше наверное здесь сравнивать объекты класса Categoty
                     foodCategoryList.add(purchase);

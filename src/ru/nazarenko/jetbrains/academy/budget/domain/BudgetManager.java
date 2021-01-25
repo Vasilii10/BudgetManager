@@ -15,9 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.addPurchaseByCategory;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
-import static ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortServiceContext.sortMenu;
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
 public class BudgetManager {
 
@@ -25,17 +23,17 @@ public class BudgetManager {
     private static final String FORMAT = "$%.2f";
     private final String pathToLoadingPurchases;
     private final String pathToOutputPurchases;
-    private final static Map<Integer, String> menuItems = new HashMap<>();
+    private final static Map<Integer, String> MENU_ITEMS = new HashMap<>();
 
     static {
-        menuItems.put(1, " Add income \n");
-        menuItems.put(2, " Add purchase \n");
-        menuItems.put(3, " Show list of purchases \n");
-        menuItems.put(4, " Balance \n");
-        menuItems.put(5, " Save \n");
-        menuItems.put(6, " Load \n");
-        menuItems.put(7, " Analyze (Sort) \n");
-        menuItems.put(0, " Exit ");
+        MENU_ITEMS.put(1, " Add income \n");
+        MENU_ITEMS.put(2, " Add purchase \n");
+        MENU_ITEMS.put(3, " Show list of purchases \n");
+        MENU_ITEMS.put(4, " Balance \n");
+        MENU_ITEMS.put(5, " Save \n");
+        MENU_ITEMS.put(6, " Load \n");
+        MENU_ITEMS.put(7, " Analyze (Sort) \n");
+        MENU_ITEMS.put(0, " Exit ");
     }
 
     public BudgetManager(AppConfiguration configuration) {
@@ -68,12 +66,14 @@ public class BudgetManager {
                     break;
 
                 case 2:
+                    int backItemIndexInCategoriesMenu = 5;
+
                     System.out.println();
                     while (true) {
                         CategoryManager.showCategoriesMenu();
                         int categoryIndexFromConsole = Integer.parseInt(getLineFromConsole(reader));
 
-                        if (categoryIndexFromConsole == 5) { // послений пункт меню
+                        if (categoryIndexFromConsole == backItemIndexInCategoriesMenu) {
                             System.out.println();
                             break;
                         }
@@ -82,8 +82,7 @@ public class BudgetManager {
                         Purchase purchase = getPurchaseFromConsole(purchaseCategory, reader);
 
                         purchaseManager.addPurchase(purchase, balanceManager);
-
-                        addPurchaseByCategory(purchase, purchaseManager, categoryManager);
+                        purchaseManager.addPurchaseByCategory(purchase, purchaseManager, categoryManager);
 
                         System.out.println("Purchase was added!\n");
                     }
@@ -91,6 +90,8 @@ public class BudgetManager {
 
                 case 3:
                     System.out.println();
+                    int backItemIndexInAllCategoriesMenu = 6;
+
                     if (!PurchaseManager.purchasesListIsAvailable()) {
                         System.out.println(PURCHASE_LIST_IS_EMPTY + "\n"); // introduce the list of constants
                         break;
@@ -98,10 +99,9 @@ public class BudgetManager {
 
                     while (true) {
                         CategoryManager.printAllCategoriesToConsole();
-
                         int choice = Integer.parseInt(reader.readLine());
 
-                        if (choice == 6) { // индекс объявить и назвать
+                        if (choice == backItemIndexInAllCategoriesMenu) {
                             System.out.println();
                             break;
                         }
@@ -129,8 +129,8 @@ public class BudgetManager {
                     break;
 
                 case 6:
-                    InputService service = new FileInputService(pathToLoadingPurchases, purchaseManager, categoryManager);
-                    service.loadPurchases();
+                    InputService fileInputService = new FileInputService(pathToLoadingPurchases, purchaseManager, categoryManager);
+                    fileInputService.loadPurchases();
 
                     System.out.println();
                     System.out.println("Purchases were loaded!");
@@ -141,7 +141,7 @@ public class BudgetManager {
                     SortServiceContext sortServiceContext = new SortServiceContext();
                     Scanner scanner = new Scanner(System.in);
                     while (true) {
-                        sortMenu();
+                       SortServiceContext.showSortMenu();
                         int choice = scanner.nextInt();
                         if (choice == 4) {
                             break;
@@ -159,6 +159,7 @@ public class BudgetManager {
                     System.out.println();
                     System.out.print("Bye!");
                     System.exit(0);
+
                 default:
                     System.err.println("Wrong number! Please try again!");
                     break;
@@ -168,8 +169,6 @@ public class BudgetManager {
         } catch (IOException | InputServiceException e) {
             throw new ApplicationException(e);
         }
-
-
     }
 
     private static double getNumberFromConsole(String currencySymbol, BufferedReader reader) throws IOException {
@@ -195,11 +194,11 @@ public class BudgetManager {
     }
 
     private static void showConsoleMenu() {
-        for (Map.Entry<Integer, String> key : menuItems.entrySet()) {
+        for (Map.Entry<Integer, String> key : MENU_ITEMS.entrySet()) {
             if (key.getKey() > 0) System.out.print(key.getKey() + ")" + key.getValue());
         }
 
-        System.out.println("0)" + menuItems.get(0) + "\n" + System.getProperty(System.lineSeparator()));
+        System.out.println("0)" + MENU_ITEMS.get(0) + "\n" + System.getProperty(System.lineSeparator()));
     }
 
 }

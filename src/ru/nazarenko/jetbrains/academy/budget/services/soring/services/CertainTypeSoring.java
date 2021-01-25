@@ -9,7 +9,7 @@ import java.util.Scanner;
 import static ru.nazarenko.jetbrains.academy.budget.domain.BudgetManager.PURCHASE_LIST_IS_EMPTY;
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
 import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.*;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
 public class CertainTypeSoring implements SortingService {
     @Override
