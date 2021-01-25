@@ -11,7 +11,7 @@ public class SortServiceContext {
     private SortingService sortingService;
     private ArrayList<Purchase> purchases;
 
-    public static void sortMenu() {
+    public static void showSortMenu() {
         System.out.println();
         System.out.println("What do you want to sort?");
         System.out.println("1) Sort all purchases");
@@ -48,7 +48,7 @@ public class SortServiceContext {
         purchases = this.sortingService.sort(purchases);
     }
 
-    public void printSortedPurchaseList() {
+    public void printSortedPurchaseList() throws SortingServiceException {
         this.sortingService.print(purchases);
     }
 

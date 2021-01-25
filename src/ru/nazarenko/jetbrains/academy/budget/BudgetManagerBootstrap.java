@@ -10,10 +10,17 @@ public class BudgetManagerBootstrap {
     public static void main(String[] args) {
 
         String pathToLoadPurchaseFile = "supply/purchases.txt";
+        String pathToPurchaseOutputFile = "supply/purchasesOutput.txt";
+
         System.setProperty(System.lineSeparator(), ">");
 
-        AppConfiguration configuration = new AppConfiguration(pathToLoadPurchaseFile);
-        BudgetManager budgetManager = new BudgetManager(configuration);
+
+        BudgetManager budgetManager = new BudgetManager(
+                new AppConfiguration(
+                        pathToLoadPurchaseFile,
+                        pathToPurchaseOutputFile
+                )
+        );
 
         try {
            budgetManager.startBudgetManagerApplication();

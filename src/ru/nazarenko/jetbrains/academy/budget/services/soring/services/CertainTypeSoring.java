@@ -9,7 +9,7 @@ import java.util.Scanner;
 import static ru.nazarenko.jetbrains.academy.budget.domain.BudgetManager.PURCHASE_LIST_IS_EMPTY;
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
 import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.*;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
 public class CertainTypeSoring implements SortingService {
     @Override
@@ -20,7 +20,7 @@ public class CertainTypeSoring implements SortingService {
     }
 
     @Override
-    public void print(ArrayList<Purchase> purchases) {
+    public void print(ArrayList<Purchase> purchases) throws SortingServiceException {
         ArrayList<Purchase> foodCategoryList = new ArrayList<>();
         ArrayList<Purchase> ClothesCategoryList = new ArrayList<>();
         ArrayList<Purchase> EntertainmentCategoryList = new ArrayList<>();
@@ -106,7 +106,7 @@ public class CertainTypeSoring implements SortingService {
                 System.out.println("Total sum: " + CURRENCY_SYMBOL + String.format("%.2f", printTotalSumForCategory(purchases)));
             }
         } else {
-            System.err.println("Wrong!");
+            throw new SortingServiceException("Sorting service error!");
         }
 
     }

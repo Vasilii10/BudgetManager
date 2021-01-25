@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public interface SortingService {
     ArrayList<Purchase> sort(ArrayList<Purchase> purchases);
 
-    default void print(ArrayList<Purchase> purchases){ }
+    default void print(ArrayList<Purchase> purchases) throws SortingServiceException { }
 }
 

@@ -6,8 +6,7 @@ import ru.nazarenko.jetbrains.academy.budget.domain.Purchase;
 import java.util.ArrayList;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
-
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
 public class ByTypeSorting implements SortingService {
     @Override
@@ -19,15 +18,12 @@ public class ByTypeSorting implements SortingService {
 
     @Override
     public void print(ArrayList<Purchase> purchases) {
-
         ArrayList<Purchase> foodCategoryList = new ArrayList<>();
         ArrayList<Purchase> ClothesCategoryList = new ArrayList<>();
         ArrayList<Purchase> EntertainmentCategoryList = new ArrayList<>();
         ArrayList<Purchase> OtherCategoryList = new ArrayList<>();
 
-
-        for (Purchase purchase : purchases
-        ) {
+        for (Purchase purchase : purchases) {
             {
                 if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(0).getCategoryName())) { // лучше наверное здесь сравнивать объекты класса Categoty
                     foodCategoryList.add(purchase);
@@ -49,7 +45,7 @@ public class ByTypeSorting implements SortingService {
 
         double foodCategoryAllPrice = 0.0d;
         double entertainmentCategoryAllPrice = 0.0d;
-        double clothersAllPrice = 0.0d;
+        double clothesAllPrice = 0.0d;
         double othersCategoryAllPrice = 0.0d;
 
         for (Purchase p : foodCategoryList) {
@@ -60,7 +56,7 @@ public class ByTypeSorting implements SortingService {
             entertainmentCategoryAllPrice += p.getPurchasePrice();
         }
         for (Purchase p : ClothesCategoryList) {
-            clothersAllPrice += p.getPurchasePrice();
+            clothesAllPrice += p.getPurchasePrice();
         }
 
         for (Purchase p : OtherCategoryList) {
@@ -70,12 +66,11 @@ public class ByTypeSorting implements SortingService {
         System.out.println();
         System.out.println("Types:");
         System.out.println(CategoryManager.CATEGORIES_LIST.get(0).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", foodCategoryAllPrice));
+        System.out.println(CategoryManager.CATEGORIES_LIST.get(1).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", clothesAllPrice));
         System.out.println(CategoryManager.CATEGORIES_LIST.get(2).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", entertainmentCategoryAllPrice));
-        System.out.println(CategoryManager.CATEGORIES_LIST.get(1).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", clothersAllPrice));
-
         System.out.println(CategoryManager.CATEGORIES_LIST.get(3).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", othersCategoryAllPrice));
 
-        double finalSum = foodCategoryAllPrice + entertainmentCategoryAllPrice + clothersAllPrice + othersCategoryAllPrice;
+        double finalSum = foodCategoryAllPrice + entertainmentCategoryAllPrice + clothesAllPrice + othersCategoryAllPrice;
 
         System.out.println("Total sum: " + CURRENCY_SYMBOL + String.format("%.2f", finalSum));
 

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.defineCategoryByName;
-import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.addPurchaseByCategory;
-import static ru.nazarenko.jetbrains.academy.budget.domain.PurchaseManager.addPurchaseWithoutChangingBalance;
-import static ru.nazarenko.jetbrains.academy.budget.domain.SpendingsSummator.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
 
-public class FileInputService implements InputService{
+public class FileInputService implements InputService {
     public static final String FILE_SPLITTER = ":";
 
     private final String pathToFile;
@@ -44,7 +42,7 @@ public class FileInputService implements InputService{
 
                 if (nextLine.startsWith("Balance:")) {
                     String substring = nextLine.substring(nextLine.indexOf(':') + 2);
-                    BalanceManager.balance = Double.parseDouble(substring);
+                    BalanceManager.BALANCE = Double.parseDouble(substring);
                     continue;
                 }
 
@@ -73,8 +71,8 @@ public class FileInputService implements InputService{
         }
 
         for (Purchase purchase : allArrayList) {
-            addPurchaseWithoutChangingBalance(purchase);
-            addPurchaseByCategory(purchase, purchaseManager ,categoryManager);
+            purchaseManager.addPurchaseWithoutChangingBalance(purchase);
+            purchaseManager.addPurchaseByCategory(purchase, purchaseManager, categoryManager);
         }
 
     }
