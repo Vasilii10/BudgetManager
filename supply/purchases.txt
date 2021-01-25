@@ -1,0 +1,18 @@
+Almond 250g : Food : $35.43
+Milk : Food : $3.5
+Red Fuji Apple : Food : $5.99
+Eggs : Food : $3.99
+FIJI Natural Artesian Water : Food : $25.98
+Hershey's milk chocolate bars : Food : $8.54
+Great Value Broccoli Florets : Food : $1.0
+Keystone Ground Bee : Food : $6.28
+Gildan LT : Clothes : $8.61
+Men's Dual Defense Crew Socks 12 Pairs : Clothes : $13.0
+Wrangler Men's Stretch Cargo Pant : Clothes : $19.97
+LEGO DUPLO Town Farm Animals : Entertainment : $10.1
+Cinema : Entertainment : $8.73
+Skate rental : Entertainment : $30.0
+Sensodyne Pronamel Toothpaste : Other : $19.74
+Chick-fil-A $10 Gift Card : Other : $10.0
+Debt : Other : $3.5
+Balance: 785.64
