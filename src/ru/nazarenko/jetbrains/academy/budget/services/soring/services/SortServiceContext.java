@@ -48,7 +48,7 @@ public class SortServiceContext {
         purchases = this.sortingService.sort(purchases);
     }
 
-    public void printSortedPurchaseList() {
+    public void printSortedPurchaseList() throws SortingServiceException {
         this.sortingService.print(purchases);
     }
 

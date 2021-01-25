@@ -45,7 +45,7 @@ public class ByTypeSorting implements SortingService {
 
         double foodCategoryAllPrice = 0.0d;
         double entertainmentCategoryAllPrice = 0.0d;
-        double clothersAllPrice = 0.0d;
+        double clothesAllPrice = 0.0d;
         double othersCategoryAllPrice = 0.0d;
 
         for (Purchase p : foodCategoryList) {
@@ -56,7 +56,7 @@ public class ByTypeSorting implements SortingService {
             entertainmentCategoryAllPrice += p.getPurchasePrice();
         }
         for (Purchase p : ClothesCategoryList) {
-            clothersAllPrice += p.getPurchasePrice();
+            clothesAllPrice += p.getPurchasePrice();
         }
 
         for (Purchase p : OtherCategoryList) {
@@ -66,12 +66,11 @@ public class ByTypeSorting implements SortingService {
         System.out.println();
         System.out.println("Types:");
         System.out.println(CategoryManager.CATEGORIES_LIST.get(0).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", foodCategoryAllPrice));
+        System.out.println(CategoryManager.CATEGORIES_LIST.get(1).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", clothesAllPrice));
         System.out.println(CategoryManager.CATEGORIES_LIST.get(2).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", entertainmentCategoryAllPrice));
-        System.out.println(CategoryManager.CATEGORIES_LIST.get(1).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", clothersAllPrice));
-
         System.out.println(CategoryManager.CATEGORIES_LIST.get(3).getCategoryName() + " - " + CURRENCY_SYMBOL + String.format("%.2f", othersCategoryAllPrice));
 
-        double finalSum = foodCategoryAllPrice + entertainmentCategoryAllPrice + clothersAllPrice + othersCategoryAllPrice;
+        double finalSum = foodCategoryAllPrice + entertainmentCategoryAllPrice + clothesAllPrice + othersCategoryAllPrice;
 
         System.out.println("Total sum: " + CURRENCY_SYMBOL + String.format("%.2f", finalSum));
 

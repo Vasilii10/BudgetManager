@@ -18,32 +18,31 @@ public class FileOutputService implements OutputService {
     public FileOutputService(String fullPathToOutputFile, PurchaseManager purchaseManager) {
         this.fullPathToOutputFile = fullPathToOutputFile;
         this.purchaseManager = purchaseManager;
-
     }
 
-    public void writePurchasesInFile( File outputFile) {
+    public void writePurchasesInFile(File outputFile) throws OutputServiceException {
         try (PrintWriter printWriter = new PrintWriter(outputFile)) {
             for (Purchase purchase : purchaseManager.getAllPurchases()) {
                 printWriter.println(
                         purchase.getPurchaseName() + " : " +
-                        purchase.getPurchaseCategory() + " : " + CURRENCY_SYMBOL + purchase.getPurchasePrice()
+                                purchase.getPurchaseCategory() + " : " + CURRENCY_SYMBOL + purchase.getPurchasePrice()
                 );
             }
         } catch (IOException e) {
-            System.err.printf("An exception occurs %s", e.getMessage());
+            throw new OutputServiceException("Error during writing file!");
         }
     }
 
-    public void insertBalanceInFile(double balance, File outputFile) {
+    public void insertBalanceInFile(double balance, File outputFile) throws OutputServiceException {
         try (FileWriter printWriter = new FileWriter(outputFile, true)) {
             printWriter.write("Balance: " + balance);
         } catch (IOException e) {
-            System.err.printf("An exception occurs %s", e.getMessage());
+            throw new OutputServiceException("Error during writing file!");
         }
     }
 
     @Override
-    public void outputPurchases() {
+    public void outputPurchases() throws OutputServiceException {
         File file = new File(fullPathToOutputFile);
         writePurchasesInFile(file);
     }

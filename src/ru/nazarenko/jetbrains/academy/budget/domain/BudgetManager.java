@@ -6,7 +6,9 @@ import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServic
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServiceException;
 import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.FileOutputService;
 import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.OutputService;
+import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.OutputServiceException;
 import ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortServiceContext;
+import ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortingServiceException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -161,12 +163,12 @@ public class BudgetManager {
                     System.exit(0);
 
                 default:
-                    System.err.println("Wrong number! Please try again!");
-                    break;
+                    throw new IncorrectMenuItemException();
             }
             showConsoleMenu();
             defineAppAction(balanceManager, categoryManager, purchaseManager);
-        } catch (IOException | InputServiceException e) {
+
+        } catch (IOException | InputServiceException | IncorrectMenuItemException | SortingServiceException | OutputServiceException e) {
             throw new ApplicationException(e);
         }
     }

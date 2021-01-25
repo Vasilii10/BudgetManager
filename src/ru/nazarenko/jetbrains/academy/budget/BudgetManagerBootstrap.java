@@ -14,8 +14,13 @@ public class BudgetManagerBootstrap {
 
         System.setProperty(System.lineSeparator(), ">");
 
-        AppConfiguration configuration = new AppConfiguration(pathToLoadPurchaseFile, pathToPurchaseOutputFile);
-        BudgetManager budgetManager = new BudgetManager(configuration);
+
+        BudgetManager budgetManager = new BudgetManager(
+                new AppConfiguration(
+                        pathToLoadPurchaseFile,
+                        pathToPurchaseOutputFile
+                )
+        );
 
         try {
            budgetManager.startBudgetManagerApplication();

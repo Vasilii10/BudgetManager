@@ -16,34 +16,28 @@ public class AllPurchasesSorting implements SortingService {
         return purchases;
     }
 
-    /**
-     * должен выводить отсортированные ! и скорее всего без параметра
-     */
     public void print(ArrayList<Purchase> purchases) {
-
         if (!purchases.isEmpty()) {
             System.out.println();
 
             double counter = 0.0d;
 
             System.out.println("All:");
+
             for (Purchase purchase : purchases) {
                 System.out.println(printPurchaseInList(purchase));
                 counter += purchase.getPurchasePrice();
             }
+
             System.out.println("Total sum: " + CURRENCY_SYMBOL + String.format("%.2f", counter));
         } else {
             System.out.println();
             System.out.println("The purchase list is empty!");
         }
-
-
     }
 
-    // FIXME: 22/01/2021 не дуюлировать !
     private static String printPurchaseInList(Purchase purchase) {
         return purchase.getPurchaseName() + CURRENCY_SYMBOL + String.format("%.2f", purchase.getPurchasePrice());
     }
-
 
 }

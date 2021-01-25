@@ -4,29 +4,29 @@ import java.util.ArrayList;
 
 public class BalanceManager {
     
-    private final ArrayList<Double> incomes = new ArrayList<>();
-    public static double balance;
+    private final ArrayList<Double> incomesList = new ArrayList<>();
+    public static double BALANCE;
 
     public BalanceManager() { }
 
     public void addIncome(double income) {
-        incomes.add(income);
-        balance += income;
+        incomesList.add(income);
+        BALANCE += income;
     }
 
     public void subtractPurchaseFromBalance(double purchase) {
-        balance -= purchase;
+        BALANCE -= purchase;
     }
 
-    public ArrayList<Double> getIncomes() {
-        return incomes;
+    public ArrayList<Double> getIncomesList() {
+        return incomesList;
     }
 
     public double getBalance() {
-        return balance;
+        return BALANCE;
     }
 
     public void setBalance(double balance) {
-        this.balance=balance;
+        this.BALANCE =balance;
     }
 }

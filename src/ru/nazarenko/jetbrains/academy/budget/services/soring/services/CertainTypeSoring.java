@@ -20,7 +20,7 @@ public class CertainTypeSoring implements SortingService {
     }
 
     @Override
-    public void print(ArrayList<Purchase> purchases) {
+    public void print(ArrayList<Purchase> purchases) throws SortingServiceException {
         ArrayList<Purchase> foodCategoryList = new ArrayList<>();
         ArrayList<Purchase> ClothesCategoryList = new ArrayList<>();
         ArrayList<Purchase> EntertainmentCategoryList = new ArrayList<>();
@@ -106,7 +106,7 @@ public class CertainTypeSoring implements SortingService {
                 System.out.println("Total sum: " + CURRENCY_SYMBOL + String.format("%.2f", printTotalSumForCategory(purchases)));
             }
         } else {
-            System.err.println("Wrong!");
+            throw new SortingServiceException("Sorting service error!");
         }
 
     }

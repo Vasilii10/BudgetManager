@@ -42,7 +42,7 @@ public class FileInputService implements InputService {
 
                 if (nextLine.startsWith("Balance:")) {
                     String substring = nextLine.substring(nextLine.indexOf(':') + 2);
-                    BalanceManager.balance = Double.parseDouble(substring);
+                    BalanceManager.BALANCE = Double.parseDouble(substring);
                     continue;
                 }
 
