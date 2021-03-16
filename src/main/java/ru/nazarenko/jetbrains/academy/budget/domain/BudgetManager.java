@@ -1,6 +1,6 @@
 package ru.nazarenko.jetbrains.academy.budget.domain;
 
-import ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration;
+import ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.FileInputService;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputService;
 import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServiceException;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration.CURRENCY_SYMBOL;
 
 public class BudgetManager {
 

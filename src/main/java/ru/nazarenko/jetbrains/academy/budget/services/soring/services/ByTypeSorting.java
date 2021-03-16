@@ -6,7 +6,7 @@ import ru.nazarenko.jetbrains.academy.budget.domain.Purchase;
 import java.util.ArrayList;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.CATEGORIES_LIST;
-import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration.CURRENCY_SYMBOL;
 
 public class ByTypeSorting implements SortingService {
     @Override
