@@ -163,12 +163,12 @@ public class BudgetManager {
                     System.exit(0);
 
                 default:
-                    throw new IncorrectMenuItemException();
+                    throw new IncorrectMenuItemExeption();
             }
             showConsoleMenu();
             defineAppAction(balanceManager, categoryManager, purchaseManager);
 
-        } catch (IOException | InputServiceException | IncorrectMenuItemException | SortingServiceException | OutputServiceException e) {
+        } catch (IOException | InputServiceException | IncorrectMenuItemExeption | SortingServiceException | OutputServiceException e) {
             throw new ApplicationException(e);
         }
     }
