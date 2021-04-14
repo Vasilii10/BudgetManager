@@ -1,65 +1,59 @@
 package ru.nazarenko.jetbrains.academy.budget;
 
-import ru.nazarenko.jetbrains.academy.budget.domain.ApplicationException;
-import ru.nazarenko.jetbrains.academy.budget.domain.BudgetManager;
+import ru.nazarenko.jetbrains.academy.budget.domain.*;
 import ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 
 public class BudgetManagerBootstrap {
 
-    private static final Logger LOG = Logger.getLogger(BudgetManagerBootstrap.class.getName());
+	public static final String PATH_TO_CONFIG = "supply/appCoreConfig.properties";
+	public static final String PATH_TO_LOAD_PURCHASE_FILE = "supply/purchases.txt";
+	public static final String PATH_TO_PURCHASE_OUTPUT_FILE = "supply/purchasesOutput.txt";
+	private static final Logger LOG = Logger.getLogger(BudgetManagerBootstrap.class.getName());
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
+		try {
+			try {
+				configureLogging();
+			} catch (LoggingConfigurationException e) {
+				System.err.println("Error due configuration logging!");
+				throw new ApplicationException();
+			}
 
-        configureLogging();
+			LOG.info("Start BudgetManager Application");
+			System.setProperty(System.lineSeparator(), ">");
 
-        LOG.info("Start BudgetManager Application");
+			new BudgetManager(
+				new AppConfiguration(
+					PATH_TO_LOAD_PURCHASE_FILE,
+					PATH_TO_PURCHASE_OUTPUT_FILE
+				)
+			).startBudgetManagerApplication();
 
-        String pathToLoadPurchaseFile = "supply/purchases.txt";
-        String pathToPurchaseOutputFile = "supply/purchasesOutput.txt";
+		} catch (ApplicationException | IOException e) {
+			System.err.println("Application error! Please, try again.");
+		}
+	}
 
-        System.setProperty(System.lineSeparator(), ">");
+	private static void configureLogging() throws LoggingConfigurationException {
+		Properties appProperties = new Properties();
+		try {
+			appProperties.load(new BufferedInputStream(new FileInputStream(PATH_TO_CONFIG)));
 
+			FileHandler fileHandler = new FileHandler(appProperties.getProperty("path_to_write_log"));
+			LOG.addHandler(fileHandler);
 
-        BudgetManager budgetManager = new BudgetManager(
-                new AppConfiguration(
-                        pathToLoadPurchaseFile,
-                        pathToPurchaseOutputFile
-                )
-        );
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileHandler.setFormatter(formatter);
 
-        try {
-            budgetManager.startBudgetManagerApplication();
-        } catch (ApplicationException | IOException e) {
-            System.err.println("Application error! Please, try again." + e.getCause());
-        }
+			LOG.setUseParentHandlers(false);
 
-    }
-
-    private static void configureLogging() {
-        Properties appProperties = new Properties();
-        try {
-            appProperties.load(new BufferedInputStream(new FileInputStream(
-                    "supply/appCoreConfig.properties")));
-
-            FileHandler fileHandler = new FileHandler(appProperties.getProperty("outPathToWrightLog"));
-            LOG.addHandler(fileHandler);
-
-            SimpleFormatter formatter = new SimpleFormatter();
-            fileHandler.setFormatter(formatter);
-
-            LOG.setUseParentHandlers(false);  // turn off console logging
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (IOException e) {
+			throw new LoggingConfigurationException();
+		}
+	}
 }

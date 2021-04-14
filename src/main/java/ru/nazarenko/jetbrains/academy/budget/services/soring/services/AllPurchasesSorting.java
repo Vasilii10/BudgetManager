@@ -8,7 +8,6 @@ import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfigurat
 
 public class AllPurchasesSorting implements SortingService {
 
-
     @Override
     public ArrayList<Purchase> sort(ArrayList<Purchase> purchases) {
         purchases.sort(Purchase::compareTo);
@@ -16,6 +15,7 @@ public class AllPurchasesSorting implements SortingService {
         return purchases;
     }
 
+    @Override
     public void print(ArrayList<Purchase> purchases) {
         if (!purchases.isEmpty()) {
             System.out.println();

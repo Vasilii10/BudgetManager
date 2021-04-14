@@ -26,10 +26,7 @@ public class CertainTypeSoring implements SortingService {
         ArrayList<Purchase> EntertainmentCategoryList = new ArrayList<>();
         ArrayList<Purchase> OtherCategoryList = new ArrayList<>();
 
-
-        for (Purchase purchase : purchases
-        ) {
-            {
+        for (Purchase purchase : purchases) {
                 if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(0).getCategoryName())) { // лучше наверное здесь сравнивать объекты класса Categoty
                     foodCategoryList.add(purchase);
                 } else if (purchase.getPurchaseCategory().equals(CATEGORIES_LIST.get(1).getCategoryName())) {
@@ -40,7 +37,6 @@ public class CertainTypeSoring implements SortingService {
                     OtherCategoryList.add(purchase);
                 } else
                     System.err.println("Something went wrong");
-            }
         }
 
         foodCategoryList.sort(Purchase::compareTo);
@@ -54,7 +50,6 @@ public class CertainTypeSoring implements SortingService {
         System.out.println();
 
         int categoryIndex = scanner.nextInt();
-
 
         if (categoryIndex == 1) {
             System.out.println("Food:");
