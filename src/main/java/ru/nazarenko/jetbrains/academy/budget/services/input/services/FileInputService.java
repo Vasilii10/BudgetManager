@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static ru.nazarenko.jetbrains.academy.budget.domain.CategoryManager.defineCategoryByName;
-import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration.CURRENCY_SYMBOL;
 
 public class FileInputService implements InputService {
     public static final String FILE_SPLITTER = ":";

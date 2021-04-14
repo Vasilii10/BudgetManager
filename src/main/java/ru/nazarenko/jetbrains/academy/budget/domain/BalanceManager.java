@@ -27,6 +27,6 @@ public class BalanceManager {
     }
 
     public void setBalance(double balance) {
-        this.BALANCE =balance;
+        this.BALANCE = balance;
     }
 }

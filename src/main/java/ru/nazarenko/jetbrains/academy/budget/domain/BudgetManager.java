@@ -1,23 +1,15 @@
 package ru.nazarenko.jetbrains.academy.budget.domain;
 
-import ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration;
-import ru.nazarenko.jetbrains.academy.budget.services.input.services.FileInputService;
-import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputService;
-import ru.nazarenko.jetbrains.academy.budget.services.input.services.InputServiceException;
-import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.FileOutputService;
-import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.OutputService;
-import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.OutputServiceException;
-import ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortServiceContext;
-import ru.nazarenko.jetbrains.academy.budget.services.soring.services.SortingServiceException;
+import ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration;
+import ru.nazarenko.jetbrains.academy.budget.services.input.services.*;
+import ru.nazarenko.jetbrains.academy.budget.services.ouput.services.*;
+import ru.nazarenko.jetbrains.academy.budget.services.soring.services.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
 
-import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration.CURRENCY_SYMBOL;
 
 public class BudgetManager {
 
@@ -26,6 +18,7 @@ public class BudgetManager {
     private final String pathToLoadingPurchases;
     private final String pathToOutputPurchases;
     private final static Map<Integer, String> MENU_ITEMS = new HashMap<>();
+    private static final Logger LOG = Logger.getLogger(BudgetManager.class.getName());
 
     static {
         MENU_ITEMS.put(1, " Add income \n");
@@ -57,7 +50,10 @@ public class BudgetManager {
                                  PurchaseManager purchaseManager) throws IOException, ApplicationException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int menuChoice = Integer.parseInt(reader.readLine());
+
+        // TODO: 15/04/2021 create verification of valid menu number
+        int menuChoice = getMenuChoice();
+
         try {
             switch (menuChoice) {
                 case 1:
@@ -163,17 +159,30 @@ public class BudgetManager {
                     System.exit(0);
 
                 default:
-                    throw new IncorrectMenuItemException();
+                    throw new IncorrectMenuItemExeption();
             }
             showConsoleMenu();
             defineAppAction(balanceManager, categoryManager, purchaseManager);
 
-        } catch (IOException | InputServiceException | IncorrectMenuItemException | SortingServiceException | OutputServiceException e) {
+        } catch (IOException | InputServiceException | IncorrectMenuItemExeption | SortingServiceException | OutputServiceException e) {
             throw new ApplicationException(e);
         }
     }
 
-    private static double getNumberFromConsole(String currencySymbol, BufferedReader reader) throws IOException {
+    private int getMenuChoice() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            return Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            LOG.log(Level.SEVERE, "Неверный формат ввода!");
+            System.out.println(System.getProperty(System.lineSeparator()));
+            return getMenuChoice();
+        }
+    }
+
+    private static double getNumberFromConsole(String currencySymbol, BufferedReader reader)
+        throws IOException {
         String readFromConsole = reader.readLine();
 
         return Double.parseDouble(readFromConsole.substring(readFromConsole.indexOf(currencySymbol) + 1));
@@ -183,7 +192,9 @@ public class BudgetManager {
         return reader.readLine();
     }
 
-    private static Purchase getPurchaseFromConsole(Category purchaseCategory, BufferedReader reader) throws IOException {
+    private static Purchase getPurchaseFromConsole(Category purchaseCategory, BufferedReader reader)
+        throws IOException {
+
         System.out.println();
         System.out.println("Enter purchase name:\n" + System.getProperty(System.lineSeparator()));
 

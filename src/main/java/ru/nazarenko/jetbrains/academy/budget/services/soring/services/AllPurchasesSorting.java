@@ -4,10 +4,9 @@ import ru.nazarenko.jetbrains.academy.budget.domain.Purchase;
 
 import java.util.ArrayList;
 
-import static ru.nazarenko.jetbrains.academy.budget.services.AppConfiguration.CURRENCY_SYMBOL;
+import static ru.nazarenko.jetbrains.academy.budget.infrastructure.AppConfiguration.CURRENCY_SYMBOL;
 
 public class AllPurchasesSorting implements SortingService {
-
 
     @Override
     public ArrayList<Purchase> sort(ArrayList<Purchase> purchases) {
@@ -16,6 +15,7 @@ public class AllPurchasesSorting implements SortingService {
         return purchases;
     }
 
+    @Override
     public void print(ArrayList<Purchase> purchases) {
         if (!purchases.isEmpty()) {
             System.out.println();

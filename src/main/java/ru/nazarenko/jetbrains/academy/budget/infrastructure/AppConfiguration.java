@@ -1,4 +1,4 @@
-package ru.nazarenko.jetbrains.academy.budget.services;
+package ru.nazarenko.jetbrains.academy.budget.infrastructure;
 
 public class AppConfiguration {
 
